@@ -1,5 +1,6 @@
 # payment-service
-how to run locally :
+how to run locally:
+The app is using ES6, node -v 6.2
 - clone the repository
 - run gitbash from payment-service directory
 - run 

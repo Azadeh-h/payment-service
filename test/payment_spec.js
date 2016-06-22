@@ -1,10 +1,9 @@
 import payment from '../app/processes/payment';
-import paymentHelper from '../app/helpers/paymentHelper';
 
 describe('Payment process', () => {
 	let process;
 	before(() => {
-		process = new payment();
+        process = new payment('David,Rudd,60050,9%,01 March – 31 March');
 	});
 
     describe('On payslip request', () => {
@@ -37,26 +36,20 @@ describe('Payment process', () => {
     		expect(actual).to.be.equal(expected);
         });
 
-        it('generates payslip',() => {
-        	const input = {
-        		firstName: 'David',
-        		lastName:'Rudd',
-        		salary: 60050,
-        		superRate : '9%',
-        		paymentStartDate: '01 March – 31 March'
-        	}
-        	const actual = process.generatePayslip(input);
-        	const expected = 'David Rudd,01 March – 31 March,5004,922,4082,450';
-        	expect(actual).to.be.equal(expected);
-        });
-
 		it('generates payslip with comma separeted input', () => {
-			const helper = new paymentHelper();
 			const input = 'Ryan,Chen,120000,10%,01 March – 31 March';
-
-			const actual = process.generatePayslip(helper.extractEmployeeDataOutofCsv(input));
+            const proc = new payment(input);
+            const actual = proc.generatePayslip(input);
 			const expected = 'Ryan Chen,01 March – 31 March,10000,2696,7304,1000';
 			expect(actual).to.be.equal(expected);
 		});
+
+        it('returns invalid message if the input is invalid', () => {
+            const input = 'Ryan,,120000,10%,01 March – 31 March';
+            const proc = new payment(input);
+            const actual = proc.generatePayslip(input);
+            const expected = 'invalid employee details';
+            expect(actual).to.be.equal(expected);
+        });
     });
 });

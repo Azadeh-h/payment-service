@@ -1,20 +1,22 @@
 import paymentHelper from '../helpers/paymentHelper';
 
 export default class employee {
-    constructor (args) {
+    constructor(input) {
+        this.helper = new paymentHelper();
+
+        const args = this.helper.extractEmployeeDataOutofCsv(input);
         this.firstName = args.firstName;
         this.lastName = args.lastName;
         this.salary = args.salary;
         this.superRate = args.superRate;
         this.paymentStartDate = args.paymentStartDate;
-        this.helper = new paymentHelper();
     }
 
     nameIsValid() {
         return (this.firstName && this.lastName);
     }
 
-    salaryIsValid () {
+    salaryIsValid() {
         return this.salary > 0;
     }
 

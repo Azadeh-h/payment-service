@@ -2,8 +2,9 @@ import paymentHelper from '../helpers/paymentHelper';
 import employee from '../models/employee';
 
 export default class payment {
-	constructor() {
+	constructor(employeeData) {
 		this.helper = new paymentHelper();
+		this.employee = new employee(employeeData);
 	}
 
 	calculateGrossIncome(salary){
@@ -30,17 +31,18 @@ export default class payment {
 		return incomeSuper;
 	}
 
-	generatePayslip(employeeData){
-        const emp = new employee(employeeData);
-        let data = [];
-        if(emp.isValid()) {
-    		data.push(emp.constructName());
-    		data.push(emp.paymentStartDate.replace(/(\r\n|\n|\r)/g,''));
-    		data.push(this.calculateGrossIncome(emp.salary));
-    		data.push(this.calculateIncomeTax(emp.salary));
-    		data.push(this.calculateNetIncome(emp.salary));
-    		data.push(this.calculateSuper(emp.salary, emp.superRate));
+	generatePayslip(){
+        if(!this.employee.isValid()) {
+        	return 'invalid employee details';
         }
+        let data = [];
+		data.push(this.employee.constructName());
+		data.push(this.employee.paymentStartDate.replace(/(\r\n|\n|\r)/g,''));
+		data.push(this.calculateGrossIncome(this.employee.salary));
+		data.push(this.calculateIncomeTax(this.employee.salary));
+		data.push(this.calculateNetIncome(this.employee.salary));
+		data.push(this.calculateSuper(this.employee.salary, this.employee.superRate));
+        
         return data.join(',');
 	}
 }

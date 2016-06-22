@@ -1,6 +1,6 @@
 export default class paymentHelper {
 	constructor() {
-		let salaryRange = [];
+    	let salaryRange = [];
 		salaryRange.push({min:0, max:18200 ,fixRate: 0, perDollar: 0});
 		salaryRange.push({min:18201, max:37000, fixRate: 0, perDollar: 0.19});
 		salaryRange.push({min:37001, max:80000, fixRate: 3572, perDollar: 0.325});
@@ -18,16 +18,14 @@ export default class paymentHelper {
 	}
 
 	extractSuperRate(superRate) {
-        if(superRate.indexOf('%') <= -1) 
-        	return 0;
+		if(superRate.indexOf('%') <= -1) 
+		return 0;
 		return parseInt(superRate.replace('%', ''), 10) / 100;
-		
 	}
 
 	extractEmployeeDataOutofCsv(input) {
 		const data = input.split(',');
-		const output = 
-		 {
+		const output = {
 			firstName: data[0],
 			lastName: data[1],
 			salary: data[2],
