@@ -1,8 +1,8 @@
-import paymentHelper from '../helpers/paymentHelper';
+import PaymentHelper from '../helpers/paymentHelper';
 
 export default class employee {
     constructor(input) {
-        this.helper = new paymentHelper();
+        this.helper = new PaymentHelper();
 
         const args = this.helper.extractEmployeeDataOutofCsv(input);
         this.firstName = args.firstName;
@@ -20,18 +20,18 @@ export default class employee {
         return this.salary > 0;
     }
 
-    superRateIsValid = function() {
+    superRateIsValid() {
         let rate = this.helper.extractSuperRate(this.superRate);
-        return rate >= 0 && rate <= .5
-    };
+        return rate >= 0 && rate <= 0.5;
+    }
 
-    isValid(){
+    isValid() {
         return this.nameIsValid() &&
             this.salaryIsValid() &&
             this.superRateIsValid();
-    };
-    
-    constructName(){
+    }
+
+    constructName() {
         return this.firstName.concat(' ', this.lastName);
     }
 }
