@@ -1,14 +1,10 @@
-import payment from './app/processes/payment';
-import paymentHelper from './app/helpers/paymentHelper';
+import Payment from './app/processes/payment';
 import fs from 'fs';
 
  function readFile(file) {
- 	const helper = new paymentHelper();
-	const paymentProcess = new payment();
-
-	fs.readFileSync(file).toString().split('\n').forEach(function (line) { 
-	    const data = helper.extractEmployeeDataOutofCsv(line)
- 		const payslip = paymentProcess.generatePayslip(data);
+	fs.readFileSync(file).toString().split('\n').forEach(function (line) {
+        const paymentProcess = new Payment(line);
+        const payslip = paymentProcess.generatePayslip();
 	    fs.appendFileSync("./files/payslip.txt", payslip.toString() + "\n");
 	});
  }
